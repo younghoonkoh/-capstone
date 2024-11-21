@@ -3,18 +3,51 @@ import { Image,
   StyleSheet,
   Platform,
   View,
-  Text,
   Alert,
-  Button, } from 'react-native'
-import React from 'react'
-import MyButton from '../components/MyButton'
-import MyTextInput from '../components/MyTextInput'
-import SocialMedia from '../components/SocialMedia'
+  Text,
+  Button,
+ } from 'react-native';
+ import React, {useEffect, useState} from 'react';
+import MyButton from '../components/MyButton';
+import MyTextInput from '../components/MyTextInput';
+import SocialMedia from '../components/SocialMedia';
+import auth from "@react-native-firebase/auth"
 
-const LoginScreen = () => {
+
+
+const LoginScreen = ({navigation}) => {
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const loginWithEmailAndPass = () => {
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(res => {
+        console.log(res);
+        Alert.alert('Success: Logged In');
+        navigation.navigate("HomeScreen")
+
+      })
+      .catch(err => {
+
+        let userFriendlyMessage;
+      
+        switch (err.code) {
+          case 'auth/invalid-email':
+            userFriendlyMessage = "유효하지 않은 이메일 형식입니다. 이메일을 확인해 주세요.";
+            break;
+          default:
+            userFriendlyMessage = "아이디 혹은 비밀번호가 틀립니다. 다시 시도해 주세요.";
+        }
+      
+        // 사용자 친화적 메시지를 Alert로 표시
+        Alert.alert("로그인 실패", userFriendlyMessage);
+      });
+  };
+
   return (
     <View style={styles.container}>
-      <MyTextInput />
       <ImageBackground source={require("../assets/background.png")}  // 로그인 배경화면
         style={styles.imageBackground}
       >
@@ -26,11 +59,13 @@ const LoginScreen = () => {
         <Text style={styles.title}>Lovely Dog</Text>
 
         <View style = {styles.inputsContainer}> 
-            <MyTextInput placeholder="Enter Email or User Name"  />
-            <MyTextInput placeholder="Password" secureTextEntry />  
-            {/*비밀번호 암호화*/}
+            <MyTextInput value = {email} onChangeText = {text => setEmail(text)} placeholder="Enter Email or User Name"  />
+            <MyTextInput value = {password} onChangeText = {text => setPassword(text)}placeholder="Password, At least 6 characters" secureTextEntry />  
+
             <Text style = {styles.textDontHave}>Don't Have An Account Yet?</Text>
-            <MyButton title={'Login'}/>       
+
+
+            <MyButton title="Login" onPress={(loginWithEmailAndPass)} />
 
             <Text style={styles.orText}>OR</Text>
 
@@ -45,17 +80,18 @@ const LoginScreen = () => {
   )
 }
 
-export default LoginScreen
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1
   },
   imageBackground: {
-    height: "100%",
-    paddingHorizontal: 20,
-    alignItems: "center"
-  },
+      flex: 1, // Make the background take up the entire screen
+      paddingHorizontal: 60,
+      alignItems: 'center',
+      justifyContent: 'center', // Ensure content stays centered
+    },
   DogImage: {
     height: 50,
     width: 90,
@@ -63,12 +99,14 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 20,
     top: 20,
-  },title:{
+  },
+  title:{
     fontSize:40,
     color:"white",
-    marginTop:60,
+    marginTop: 30,
     fontFamily: "Audiowide-Regular",
-  },inputsContainer:{
+  },
+  inputsContainer:{
     height : 450,
     width : "100%",
     backgroundColor:"white",
@@ -77,13 +115,15 @@ const styles = StyleSheet.create({
     alignItems:"center",
     marginTop:30,
     paddingHorizontal:20
-  },textDontHave:{
+  },
+  textDontHave:{
     alignSelf:"flex-end",
     marginRight:10,
     color:"black", 
     marginBottom:15,
     fontFamily:"NovaFlat-Regular"
-  }, orText:{
+  }, 
+  orText:{
     fontSize:20,
     color:"gray",
     marginTop:20,

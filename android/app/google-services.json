@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "3174423726",
+    "project_id": "react-native-d8fb2",
+    "storage_bucket": "react-native-d8fb2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3174423726:android:5ebc45f2a54eb0c1cf213f",
+        "android_client_info": {
+          "package_name": "com.young"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "3174423726-dg6q3o6sjkiu4f8aa3895ic66mbndues.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqXabIQa0Zu3sf3h_T2mwzCcNqQYo9Ogs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "3174423726-dg6q3o6sjkiu4f8aa3895ic66mbndues.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

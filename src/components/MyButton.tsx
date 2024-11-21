@@ -1,17 +1,18 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { FC } from 'react'
 
-interface Props{
-    title : string
+
+interface Props {
+    title: string
+    onPress: () => void; 
 }
 
-const MyButton : FC<Props> = ({title}) => {
-  return (
-    <TouchableOpacity style={styles.container}>
-        <Text style = {styles.title}>{title}</Text>
-    </TouchableOpacity>
-
-  )
+const MyButton : FC<Props> = ({title, onPress}) => {
+    return (
+      <TouchableOpacity onPress={onPress} style={styles.container}>
+          <Text style={styles.title}>{title}</Text>
+      </TouchableOpacity>
+    )
 }
 
 export default MyButton
@@ -23,11 +24,11 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center",
         backgroundColor:"#ff0036",
-        borderRadius:30
+        borderRadius: 30
     },
     title:{
         color:"white",
-        fontSize:20,
+        fontSize: 20,
         fontFamily:"Redressed-Regular"
     }
 })
